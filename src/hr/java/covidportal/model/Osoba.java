@@ -46,6 +46,9 @@ public class Osoba {
             osoba.zupanija = this.zupanija;
             osoba.zarazenBolescu = this.zarazenBolescu;
             osoba.kontaktiraneOsobe = this.kontaktiraneOsobe;
+
+            // Zaraza osoba koje su bile u kontaktu s ovom osobom
+
             if (!Objects.isNull(osoba.kontaktiraneOsobe)) {
                 if (zarazenBolescu instanceof Virus virus) {
                     for (Osoba kontaktiranaOsoba : osoba.kontaktiraneOsobe) {

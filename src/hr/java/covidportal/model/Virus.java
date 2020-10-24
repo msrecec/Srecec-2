@@ -5,11 +5,11 @@ public class Virus extends Bolest implements Zarazno {
         super(naziv, simptomi);
     }
 
-    // Implementirati "Deep Copy"
+    // "Deep Copy" implementacija prelaska zaraze na drugu osobu
 
     @Override
     public void prelazakZarazeNaOsobu(Osoba osoba) {
-        osoba.setZarazenBolescu(this);
+        osoba.setZarazenBolescu(new Virus(this.getNaziv(), this.getSimptomi()));
     }
 
 }
