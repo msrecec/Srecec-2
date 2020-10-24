@@ -17,11 +17,13 @@ public class Osoba {
         this.zupanija = zupanija;
         this.zarazenBolescu = zarazenBolescu;
         this.kontaktiraneOsobe = kontaktiraneOsobe;
-//        // radimo "deep copy" virusa
-        if (!Objects.isNull(kontaktiraneOsobe))
+
+        // prelazak zaraze na kontaktiranu osobu
+
+        if (!Objects.isNull(this.kontaktiraneOsobe))
             if (zarazenBolescu instanceof Virus virus) {
-                for (int i = 0; i < kontaktiraneOsobe.length; ++i) {
-                    virus.prelazakZarazeNaOsobu(kontaktiraneOsobe[i]);
+                for (Osoba kontaktiranaOsoba : this.kontaktiraneOsobe) {
+                    virus.prelazakZarazeNaOsobu(kontaktiranaOsoba);
                 }
             }
     }

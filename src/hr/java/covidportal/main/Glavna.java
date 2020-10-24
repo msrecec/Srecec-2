@@ -16,17 +16,6 @@ public class Glavna {
         Bolest[] bolesti = new Bolest[BROJ_BOLESTI + BROJ_VIRUSA];
         Osoba[] osobe = new Osoba[BROJ_OSOBA];
 
-        // Test bolesti
-
-//        bolesti[0] = new Bolest("Prehlada", null);
-//        bolesti[1] = new Bolest("Bakterijska upala", null);
-//        bolesti[2] = new Virus("Gripa", null);
-//        bolesti[3] = new Virus("Covid", null);
-
-//        for (Bolest bolest : bolesti) {
-//            System.out.println(bolest.getNaziv());
-//            System.out.println(bolest instanceof Virus);
-//        }
 
         // Unos Zupanija
 
@@ -40,13 +29,6 @@ public class Glavna {
 
         unosBolesti(input, simptomi, bolesti);
 
-        // Test unosa bolesti
-
-//        for (Bolest bolest : bolesti) {
-//            System.out.println(bolest.getNaziv());
-//            System.out.println(bolest instanceof Virus);
-//        }
-
         // Unos osoba
 
         unosOsoba(input, zupanije, bolesti, osobe);
@@ -55,10 +37,6 @@ public class Glavna {
 
         ispisOsoba(osobe);
 
-        for (Osoba osoba : osobe) {
-            System.out.println(osoba.getZarazenBolescu().getNaziv());
-            System.out.println(osoba.getZarazenBolescu() instanceof Virus);
-        }
 
     }
 
@@ -270,7 +248,7 @@ public class Glavna {
 
             do {
 
-                System.out.println("Unesite bolest osobe:");
+                System.out.println("Unesite bolest ili virus osobe:");
 
                 for (int j = 0; j < bolesti.length; ++j) {
                     System.out.printf("%d. %s%n", j + 1, bolesti[j].getNaziv());
