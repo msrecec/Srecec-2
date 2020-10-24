@@ -4,29 +4,77 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Osoba {
+
+
+    // Implementacija "Builder Pattern"
+
+    public static class Builder {
+        private String ime, prezime;
+        private Integer starost;
+        private Zupanija zupanija;
+        private Bolest zarazenBolescu;
+        private Osoba[] kontaktiraneOsobe;
+
+        public Builder(String ime) {
+            this.ime = ime;
+        }
+        public Builder prezime(String prezime) {
+            this.prezime = prezime;
+            return this;
+        }
+        public Builder starost(Integer starost) {
+            this.starost = starost;
+            return this;
+        }
+        public Builder zupanija(Zupanija zupanija) {
+            this.zupanija = zupanija;
+            return this;
+        }
+        public Builder zarazenBolescu(Bolest zarazenBolescu) {
+            this.zarazenBolescu = zarazenBolescu;
+            return this;
+        }
+        public Builder kontaktiraneOsobe(Osoba[] kontaktiraneOsobe) {
+            this.kontaktiraneOsobe = kontaktiraneOsobe;
+            return this;
+        }
+        public Osoba build() {
+            Osoba osoba = new Osoba();
+            osoba.ime = this.ime;
+            osoba.prezime = this.prezime;
+            osoba.starost = this.starost;
+            osoba.zupanija = this.zupanija;
+            osoba.zarazenBolescu = this.zarazenBolescu;
+            osoba.kontaktiraneOsobe = this.kontaktiraneOsobe;
+            if (!Objects.isNull(osoba.kontaktiraneOsobe)) {
+                if (zarazenBolescu instanceof Virus virus) {
+                    for (Osoba kontaktiranaOsoba : osoba.kontaktiraneOsobe) {
+                        virus.prelazakZarazeNaOsobu(kontaktiranaOsoba);
+                    }
+                }
+            }
+            return osoba;
+        }
+
+
+    }
+
+    // Class Fields
+
     private String ime, prezime;
     private Integer starost;
     private Zupanija zupanija;
     private Bolest zarazenBolescu;
     private Osoba[] kontaktiraneOsobe;
 
-    public Osoba(String ime, String prezime, Integer starost, Zupanija zupanija, Bolest zarazenBolescu, Osoba[] kontaktiraneOsobe) {
-        this.ime = ime;
-        this.prezime = prezime;
-        this.starost = starost;
-        this.zupanija = zupanija;
-        this.zarazenBolescu = zarazenBolescu;
-        this.kontaktiraneOsobe = kontaktiraneOsobe;
+    // Constructor is now private
 
-        // prelazak zaraze na kontaktiranu osobu
+    private Osoba() {
 
-        if (!Objects.isNull(this.kontaktiraneOsobe))
-            if (zarazenBolescu instanceof Virus virus) {
-                for (Osoba kontaktiranaOsoba : this.kontaktiraneOsobe) {
-                    virus.prelazakZarazeNaOsobu(kontaktiranaOsoba);
-                }
-            }
     }
+
+    // Getters and setters
+
 
     @Override
     public String toString() {

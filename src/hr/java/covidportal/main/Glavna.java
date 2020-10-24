@@ -346,14 +346,18 @@ public class Glavna {
                     for (int j = 0; j < odabraneKontaktiraneOsobe.length; ++j) {
                         kontaktiraneOsobe[j] = osobe[odabraneKontaktiraneOsobe[j] - 1];
                     }
-                } else {
-                    kontaktiraneOsobe = null;
                 }
             }
 
             // Spremanje osoba u polje osoba
 
-            osobe[i] = new Osoba(ime, prezime, starost, zupanija, zarazenBolescu, kontaktiraneOsobe);
+            if (i == 0) {
+                osobe[i] = new Osoba.Builder(ime).prezime(prezime).starost(starost).zupanija(zupanija)
+                        .zarazenBolescu(zarazenBolescu).build();
+            } else {
+                osobe[i] = new Osoba.Builder(ime).prezime(prezime).starost(starost).zupanija(zupanija)
+                        .zarazenBolescu(zarazenBolescu).kontaktiraneOsobe(kontaktiraneOsobe).build();
+            }
         }
     }
 }
