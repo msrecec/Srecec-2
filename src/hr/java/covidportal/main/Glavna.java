@@ -1,23 +1,32 @@
 package hr.java.covidportal.main;
 
-import hr.java.covidportal.model.Bolest;
-import hr.java.covidportal.model.Osoba;
-import hr.java.covidportal.model.Simptom;
-import hr.java.covidportal.model.Zupanija;
+import hr.java.covidportal.model.*;
 
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class Glavna {
-    public static final int BROJ_ZUPANIJA = 3, BROJ_SIMPTOMA = BROJ_ZUPANIJA, BROJ_BOLESTI = BROJ_ZUPANIJA, BROJ_OSOBA = BROJ_ZUPANIJA;
+    public static final int BROJ_ZUPANIJA = 3, BROJ_SIMPTOMA = BROJ_ZUPANIJA, BROJ_BOLESTI = 2, BROJ_VIRUSA = 2, BROJ_OSOBA = BROJ_ZUPANIJA;
 
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         Zupanija[] zupanije = new Zupanija[BROJ_ZUPANIJA];
         Simptom[] simptomi = new Simptom[BROJ_SIMPTOMA];
-        Bolest[] bolesti = new Bolest[BROJ_BOLESTI];
+        Bolest[] bolesti = new Bolest[BROJ_BOLESTI + BROJ_VIRUSA];
         Osoba[] osobe = new Osoba[BROJ_OSOBA];
+
+        // Test bolesti
+
+//        bolesti[0] = new Bolest("Prehlada", null);
+//        bolesti[1] = new Bolest("Bakterijska upala", null);
+//        bolesti[2] = new Virus("Gripa", null);
+//        bolesti[3] = new Virus("Covid", null);
+
+//        for (Bolest bolest : bolesti) {
+//            System.out.println(bolest.getNaziv());
+//            System.out.println(bolest instanceof Virus);
+//        }
 
         // Unos Zupanija
 
@@ -31,6 +40,13 @@ public class Glavna {
 
         unosBolesti(input, simptomi, bolesti);
 
+        // Test unosa bolesti
+
+//        for (Bolest bolest : bolesti) {
+//            System.out.println(bolest.getNaziv());
+//            System.out.println(bolest instanceof Virus);
+//        }
+
         // Unos osoba
 
         unosOsoba(input, zupanije, bolesti, osobe);
@@ -38,6 +54,11 @@ public class Glavna {
         // Ispis osoba
 
         ispisOsoba(osobe);
+
+        for (Osoba osoba : osobe) {
+            System.out.println(osoba.getZarazenBolescu().getNaziv());
+            System.out.println(osoba.getZarazenBolescu() instanceof Virus);
+        }
 
     }
 
@@ -87,16 +108,30 @@ public class Glavna {
     }
 
     private static void unosBolesti(Scanner input, Simptom[] simptomi, Bolest[] bolesti) {
-        String nazivBolesti;
+        String nazivBolestiIliVirusa;
         int brojOdabranihSimptoma, odabraniSimptom;
         int[] odabraniSimptomi;
         Simptom[] kopiraniSimptomi;
+        int bolestIliVirus;
 
-        System.out.printf("Unesite podatke o %d bolesti:%n", bolesti.length);
+        System.out.printf("Unesite podatke o %d bolesti ili virusa:%n", bolesti.length);
 
         for (int i = 0; i < bolesti.length; ++i) {
-            System.out.printf("Unesite naziv bolesti: ");
-            nazivBolesti = input.nextLine();
+
+            // Odabir unosa bolesti ili virusa
+
+            do {
+                System.out.printf("Unosite li bolest ili virus ?%n1)BOLEST%n2)VIRUS%n");
+                bolestIliVirus = Integer.parseInt(input.nextLine());
+
+                // Provjera unosa bolesti ili virusa
+
+                if (bolestIliVirus != 1 && bolestIliVirus != 2) {
+                    System.out.println("Pogresan unos!");
+                }
+            } while (bolestIliVirus != 1 && bolestIliVirus != 2);
+            System.out.printf("Unesite naziv bolesti ili virusa: ");
+            nazivBolestiIliVirusa = input.nextLine();
 
             // Unos Broja Odabranih Simptoma
 
@@ -161,7 +196,10 @@ public class Glavna {
             for (int j = 0; j < brojOdabranihSimptoma; ++j) {
                 kopiraniSimptomi[j] = new Simptom(simptomi[odabraniSimptomi[j] - 1].getNaziv(), simptomi[odabraniSimptomi[j] - 1].getVrijednost());
             }
-            bolesti[i] = new Bolest(nazivBolesti, kopiraniSimptomi);
+
+            // Provjera da li je unos bolest ili virus
+
+            bolesti[i] = bolestIliVirus == 1 ? new Bolest(nazivBolestiIliVirusa, kopiraniSimptomi) : new Virus(nazivBolestiIliVirusa, kopiraniSimptomi);
         }
     }
 
@@ -251,7 +289,9 @@ public class Glavna {
             } while (odabranaBolest < 1 || odabranaBolest > bolesti.length);
 
 
-            zarazenBolescu = new Bolest(bolesti[odabranaBolest - 1].getNaziv(), bolesti[odabranaBolest - 1].getSimptomi());
+            zarazenBolescu = bolesti[odabranaBolest - 1] instanceof Virus ?
+                    new Virus(bolesti[odabranaBolest - 1].getNaziv(), bolesti[odabranaBolest - 1].getSimptomi()) :
+                    new Bolest(bolesti[odabranaBolest - 1].getNaziv(), bolesti[odabranaBolest - 1].getSimptomi());
 
 
             // Provjera osoba s kojim je osoba usla u kontakt u slucaju da nije prva osoba - prva se ne gleda
