@@ -2,12 +2,12 @@ package hr.java.covidportal.model;
 
 import java.util.Objects;
 
-public class Simptom {
+public class Simptom extends ImenovaniEntitet {
     public static final String RIJETKO = "RIJETKO", SREDNJE = "SREDNJE", CESTO = "ČESTO";
-    private String naziv, vrijednost;
+    private String vrijednost;
 
     public Simptom(String naziv, String vrijednost) {
-        this.naziv = naziv;
+        super(naziv);
         this.vrijednost = vrijednost;
     }
 
@@ -23,14 +23,6 @@ public class Simptom {
     @Override
     public int hashCode() {
         return Objects.hash(getNaziv(), getVrijednost());
-    }
-
-    public String getNaziv() {
-        return naziv;
-    }
-
-    public void setNaziv(String naziv) {
-        this.naziv = naziv;
     }
 
     public String getVrijednost() {

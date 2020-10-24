@@ -1,20 +1,11 @@
 package hr.java.covidportal.model;
 
-public class Bolest {
-    private String naziv;
+public class Bolest extends ImenovaniEntitet {
     private Simptom[] simptomi;
 
     public Bolest(String naziv, Simptom[] simptomi) {
-        this.naziv = naziv;
+        super(naziv);
         this.simptomi = simptomi;
-    }
-
-    public String getNaziv() {
-        return naziv;
-    }
-
-    public void setNaziv(String naziv) {
-        this.naziv = naziv;
     }
 
     public Simptom[] getSimptomi() {
